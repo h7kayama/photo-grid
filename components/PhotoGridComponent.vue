@@ -3,7 +3,7 @@
 		<div class="__image_container" v-bind:style="styles">
 			<slot>
     	</slot>
-			<div v-if="count > 0" v-on:click="passData()" class="__image_body __quarter __image_count"><p>{{image_excess}}</p></div>
+			<div v-if="count > 0" v-on:click="passData()" class="__image_body __sextuple __image_count"><p>{{image_excess}}</p></div>
 		</div>
 	</div>
 </template>
@@ -39,7 +39,7 @@
 			},
 
 			count(){
-				return this.$slots.default.length - 4;
+				return this.$slots.default.length - 6;
 			},
 		},
 
@@ -59,8 +59,14 @@
 					case (__image_Size == 4):
 	      		vnode.elm.className += " __quarter"
 					break;
-					case (__image_Size > 4):
-	      		vnode.elm.className += " __quarter __more_image"
+					case (__image_Size == 5):
+	      		vnode.elm.className += " __quintuple"
+					break;
+					case (__image_Size == 6):
+	      		vnode.elm.className += " __sextuple"
+					break;
+					case (__image_Size > 6):
+	      		vnode.elm.className += " __sextuple __more_image"
 					break;
 				}
 	    }),
@@ -74,7 +80,7 @@
 			},
 
 			pareseExcessText(){
-				this.image_excess = this.excessText.replace('{{count}}', this.$slots.default.length - 4);
+				this.image_excess = this.excessText.replace('{{count}}', this.$slots.default.length - 6);
 			}
 		}
 	}
@@ -87,7 +93,9 @@
 		display: inline-block;
 		position: relative;
 	}
-	.__image_body:first-child, .__image_body:last-child, .__image_body.__quarter:nth-child(3){
+	.__image_body:first-child, .__image_body:last-child, .__image_body.__quarter:nth-child(3),
+  .__image_body.__quintuple:nth-child(-n+4), .__image_body.__sextuple:nth-child(-n+6),
+  .__image_body.__more_image:nth-child(6){
 		float: left;
 	}
 	.__image_body.__single{
@@ -97,8 +105,12 @@
   .__image_body.__triple, .__image_body.__quarter{
     height: 50%;
   }
+  .__image_body.__quintuple, .__image_body.__sextuple{
+    width: calc(100% / 3);
+    height: 50%;
+  }
   .__image_body.__triple:nth-child(2), .__image_body.__quarter:nth-child(2), 
-  .__image_body.__quarter:last-child, .__image_body.__more_image:nth-child(4){
+  .__image_body.__quarter:last-child, .__image_body.__quintuple:last-child{
   	float: right;
   }
   .__image_count{
@@ -113,6 +125,9 @@
   }
   .__image_body.__triple:last-child{
   	width: 100%;
+  }
+  .__image_body.__quintuple:nth-last-child(-n+2){
+  	width: 50%;
   }
 	.__image_body{
     width: 50%;
